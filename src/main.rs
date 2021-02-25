@@ -26,17 +26,15 @@ fn handle_client(mut stream: TcpStream) {
         .unwrap()
         .as_millis();
 
-    let mut file = match File::create(format!("{}.http", file_name)) {
-        Ok(f) => f,
-        Err(_) => println!("Collision {}.http already exists", file_name),
+    match File::create(format!("{}.http", file_name)) {
+        Ok(mut f) => {
+            match f.write(req.as_bytes()) {
+                Err(e) => println!("{}", e),
+                _ => {}
+            };
+        }
+        Err(_) => panic!("Collision {}.http already exists", file_name),
     };
-
-    match file.write(req.as_bytes()) {
-        Err(e) => println!("{}", e),
-        _ => {}
-    };
-
-    drop(file);
 
     let response = format!(
         "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n<html>{}</html>\r\n",
