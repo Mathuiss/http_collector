@@ -14,7 +14,7 @@ fn handle_client(mut stream: TcpStream) {
         Err(e) => println!("Error while reading request: {}", e),
     }
 
-    let client_ip = match stream.local_addr() {
+    let client_ip = match stream.peer_addr() {
         Ok(a) => format!("{}", a),
         Err(e) => format!("{}", e),
     };
@@ -49,7 +49,7 @@ fn handle_client(mut stream: TcpStream) {
     println!("{}", response);
 
     match stream.write(response.as_bytes()) {
-        Ok(_) => println!("Response sent"),
+        Ok(_) => println!("Response sent\r\n"),
         Err(e) => println!("Failed sending response: {}", e),
     }
 }
