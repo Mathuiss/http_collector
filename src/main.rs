@@ -20,7 +20,7 @@ fn handle_client(mut stream: TcpStream) {
     };
 
     let req_ptr = String::from_utf8_lossy(&buf);
-    let mut req = format!("{}\r\n{}", client_ip, String::from(req_ptr));
+    let mut req = format!("{}\r\n{}\r\n", client_ip, String::from(req_ptr));
 
     let end_index = req.as_bytes().iter().position(|&c| c == 0x0).unwrap();
     req.truncate(end_index);
