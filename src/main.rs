@@ -56,7 +56,7 @@ fn handle_client(mut stream: TcpStream) {
 
 fn main() {
     let listener = TcpListener::bind("0.0.0.0:8080").unwrap();
-    println!("Listening for connections on port {}", 80);
+    println!("Listening for connections on port {}", 8080);
 
     for stream in listener.incoming() {
         match stream {
